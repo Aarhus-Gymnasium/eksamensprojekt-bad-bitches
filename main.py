@@ -1,37 +1,77 @@
-import noise
-import numpy as np
-from PIL import Image
+
+import NoiseMapFile as NMF
+
+import pygame
+
+pygame.init()
+pygame.mixer.init(frequency=44100, size=-16, channels=6, buffer=2048)
+font = pygame.font.Font('freesansbold.ttf', 32)
+backGroundIMG = NMF.makeNoiseMap()
 
 
-def makeNoiseMap():
-    #Example: https://stackoverflow.com/questions/36719997/threshold-in-2d-numpy-array
-    shape = (1024,1024)
-    scale = .5
-    octaves = 6
-    persistence = 0.5
-    lacunarity = 2.0
-    seed = np.random.randint(0,100)
+from Player import PlayerClass
+clock = pygame.time.Clock()
+gameWindowHeight=1024
+gameWindowWidth=1024
 
-    world = np.zeros(shape)
 
-    # make coordinate grid on [0,1]^2
-    x_idx = np.linspace(0, 1, shape[0])
-    y_idx = np.linspace(0, 1, shape[1])
-    world_x, world_y = np.meshgrid(x_idx, y_idx)
 
-    # apply perlin noise, instead of np.vectorize, consider using itertools.starmap()
-    world = np.vectorize(noise.pnoise2)(world_x/scale,
-                            world_y/scale,
-                            octaves=octaves,
-                            persistence=persistence,
-                            lacunarity=lacunarity,
-                            repeatx=1024,
-                            repeaty=1024,
-                            base=seed)
 
-    world = (world < 0) * 1
 
-    # here was the error: one needs to normalize the image first. Could be done without copying the array, though
-    img = np.floor((world ) * 255).astype(np.uint8) # <- Normalize world first
-    Image.fromarray(img, mode='L').show()
+screen = pygame.display.set_mode((gameWindowWidth, gameWindowHeight))
+
+
+def collisionChecker(firstGameObject, secondGameObject):
+        if firstGameObject.x + firstGameObject.width > secondGameObject.x and firstGameObject.x < secondGameObject.x + secondGameObject.width and firstGameObject.y + firstGameObject.height > secondGameObject.y and firstGameObject.y < secondGameObject.y + secondGameObject.height:
+            return True
+
+playerObject = PlayerClass(screen,xpos=590, ypos=100)
+
+
+
+done = False
+while not done:
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            done = True
+
+
+        #KEY PRESSES:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                playerObject.ySpeed -= playerObject.maxSpeed
+            if event.key == pygame.K_DOWN:
+                playerObject.ySpeed += playerObject.maxSpeed
+            if event.key == pygame.K_LEFT:
+                playerObject.xSpeed -= playerObject.maxSpeed
+            if event.key == pygame.K_RIGHT:
+                playerObject.xSpeed += playerObject.maxSpeed
+
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_UP:
+                playerObject.ySpeed += playerObject.maxSpeed
+            if event.key == pygame.K_DOWN:
+                playerObject.ySpeed -= playerObject.maxSpeed
+            if event.key == pygame.K_LEFT:
+                playerObject.xSpeed += playerObject.maxSpeed
+            if event.key == pygame.K_RIGHT:
+                playerObject.xSpeed -= playerObject.maxSpeed
+
+    playerObject.update()
+
+        #DRAW GAME OBJECTS:
+    screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)
+    screen.blit(backGroundIMG,0,0)
+
+    playerObject.draw()
+
+
+    pygame.display.flip()
+    clock.tick(60)
+
+
+
 
