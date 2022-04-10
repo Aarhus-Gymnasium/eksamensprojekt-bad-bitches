@@ -6,7 +6,8 @@ import pygame
 pygame.init()
 pygame.mixer.init(frequency=44100, size=-16, channels=6, buffer=2048)
 font = pygame.font.Font('freesansbold.ttf', 32)
-backGroundIMG = NMF.makeNoiseMap()
+
+backGroundIMG = pygame.surfarray.make_surface(NMF.makeNoiseMap())
 
 
 from Player import PlayerClass
@@ -63,8 +64,8 @@ while not done:
     playerObject.update()
 
         #DRAW GAME OBJECTS:
-    screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)
-    screen.blit(backGroundIMG,0,0)
+    #screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)
+    screen.blit(backGroundIMG,(0,0))
 
     playerObject.draw()
 

@@ -33,4 +33,12 @@ def makeNoiseMap():
 
     # here was the error: one needs to normalize the image first. Could be done without copying the array, though
     img = np.floor((world ) * 255).astype(np.uint8) # <- Normalize world first
-    Image.fromarray(img, mode='L').show()
+
+    image = img.astype('uint8')
+    #image = Image.fromarray(img, mode='L')#.show()
+
+    #data = image.tobytes()
+    #print(len(data))
+    #format = "P"
+    #return Image.fromarray(img, mode='L')
+    return image
