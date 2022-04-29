@@ -1,34 +1,51 @@
+import random
 
 import NoiseMapFile as NMF
-
+from Player import PlayerClass
+from Enemy import EnemyClass
 import pygame
 
 pygame.init()
 pygame.mixer.init(frequency=44100, size=-16, channels=6, buffer=2048)
 font = pygame.font.Font('freesansbold.ttf', 32)
 
-backGroundIMG = pygame.surfarray.make_surface(NMF.makeNoiseMap())
 
-
-from Player import PlayerClass
 clock = pygame.time.Clock()
 gameWindowHeight=1024
 gameWindowWidth=1024
+enemies=[]
 
+def generateEnemy():
+    whoToTarget = random.randint(0,1)
+    if whoToTarget == 0:
+        enemy = EnemyClass(screen= screen,player= playerObject1)
+    else:
+        enemy = EnemyClass(screen= screen,player= playerObject2)
 
+    pixelColour = backGroundIMG.get_at((enemy.x, enemy.y))
+    if pixelColour.r == 0:
+        generateEnemy()
+    else:
+        enemies.appened(enemy)
 
+def generateMap():
+    backGroundIMG = pygame.surfarray.make_surface(NMF.makeNoiseMap())
+    pixelColourPlayer1 = backGroundIMG.get_at((590, 100))
+    pixelColourPlayer2 = backGroundIMG.get_at((890, 100))
+    if pixelColourPlayer1 < 0:
 
-
+        generateMap()
 screen = pygame.display.set_mode((gameWindowWidth, gameWindowHeight))
-
+backGroundIMG = pygame.surfarray.make_surface(NMF.makeNoiseMap())
+#generateMap()
 
 def collisionChecker(firstGameObject, secondGameObject):
         if firstGameObject.x + firstGameObject.width > secondGameObject.x and firstGameObject.x < secondGameObject.x + secondGameObject.width and firstGameObject.y + firstGameObject.height > secondGameObject.y and firstGameObject.y < secondGameObject.y + secondGameObject.height:
             return True
 
-playerObject = PlayerClass(screen,xpos=590, ypos=100)
+playerObject1 = PlayerClass(backGroundIMG,screen,xpos=590, ypos=100)
 
-
+playerObject2 = PlayerClass(backGroundIMG,screen,xpos=890, ypos=100)
 
 done = False
 while not done:
@@ -43,31 +60,54 @@ while not done:
         #KEY PRESSES:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                playerObject.ySpeed -= playerObject.maxSpeed
+                playerObject1.ySpeed -= playerObject1.maxSpeed
             if event.key == pygame.K_DOWN:
-                playerObject.ySpeed += playerObject.maxSpeed
+                playerObject1.ySpeed += playerObject1.maxSpeed
             if event.key == pygame.K_LEFT:
-                playerObject.xSpeed -= playerObject.maxSpeed
+                playerObject1.xSpeed -= playerObject1.maxSpeed
             if event.key == pygame.K_RIGHT:
-                playerObject.xSpeed += playerObject.maxSpeed
+                playerObject1.xSpeed += playerObject1.maxSpeed
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
-                playerObject.ySpeed += playerObject.maxSpeed
+                playerObject1.ySpeed += playerObject1.maxSpeed
             if event.key == pygame.K_DOWN:
-                playerObject.ySpeed -= playerObject.maxSpeed
+                playerObject1.ySpeed -= playerObject1.maxSpeed
             if event.key == pygame.K_LEFT:
-                playerObject.xSpeed += playerObject.maxSpeed
+                playerObject1.xSpeed += playerObject1.maxSpeed
             if event.key == pygame.K_RIGHT:
-                playerObject.xSpeed -= playerObject.maxSpeed
+                playerObject1.xSpeed -= playerObject1.maxSpeed
 
-    playerObject.update()
+        # KEY PRESSES:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_w:
+                playerObject2.ySpeed -= playerObject2.maxSpeed
+            if event.key == pygame.K_s:
+                playerObject2.ySpeed += playerObject2.maxSpeed
+            if event.key == pygame.K_a:
+                playerObject2.xSpeed -= playerObject2.maxSpeed
+            if event.key == pygame.K_d:
+                playerObject2.xSpeed += playerObject2.maxSpeed
+
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_w:
+                playerObject2.ySpeed += playerObject2.maxSpeed
+            if event.key == pygame.K_s:
+                playerObject2.ySpeed -= playerObject2.maxSpeed
+            if event.key == pygame.K_a:
+                playerObject2.xSpeed += playerObject2.maxSpeed
+            if event.key == pygame.K_d:
+                playerObject2.xSpeed -= playerObject2.maxSpeed
+
+    playerObject1.update()
+    playerObject2.update()
 
         #DRAW GAME OBJECTS:
     #screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)
     screen.blit(backGroundIMG,(0,0))
 
-    playerObject.draw()
+    playerObject1.draw()
+    playerObject2.draw()
 
 
     pygame.display.flip()
