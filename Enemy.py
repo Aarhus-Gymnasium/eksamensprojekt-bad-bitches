@@ -16,10 +16,10 @@ class EnemyClass:
 
 
 
-    def __init__(self,screen,player):
+    def __init__(self,screen,player,BG):
         self.playerObject=player
         self.theScreen=screen
-
+        self.bg = BG
 
         self.screenWidth = self.theScreen.get_size()[0] #
         self.screenHeight = self.theScreen.get_size()[1]
@@ -47,15 +47,23 @@ class EnemyClass:
             self.x=0
         if self.y<0:
             self.y=0
-        if self.x < self.playerObject.x:
-            self.xSpeed = 1
-        if self.y < self.playerObject.y:
-            self.ySpeed = 1
 
-        if self.x > self.playerObject.x:
-            self.xSpeed =- 1
-        if self.y > self.playerObject.y:
-            self.ySpeed =- 1
+        self.pixelColour = self.bg.get_at((self.futureX, self.futureY))
+
+        if self.pixelColour.r > 100:
+            if self.x < self.playerObject.x:
+                self.xSpeed = 1
+            if self.y < self.playerObject.y:
+                self.ySpeed = 1
+
+            if self.x > self.playerObject.x:
+                self.xSpeed =- 1
+            if self.y > self.playerObject.y:
+                self.ySpeed =- 1
+
+            self.x += self.xSpeed
+            self.y += self.ySpeed
+
 
 
 

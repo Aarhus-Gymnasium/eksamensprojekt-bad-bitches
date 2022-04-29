@@ -18,26 +18,30 @@ enemies=[]
 def generateEnemy():
     whoToTarget = random.randint(0,1)
     if whoToTarget == 0:
-        enemy = EnemyClass(screen= screen,player= playerObject1)
+        enemy = EnemyClass(screen= screen,player= playerObject1,BG =backGroundIMG)
     else:
-        enemy = EnemyClass(screen= screen,player= playerObject2)
+        enemy = EnemyClass(screen= screen,player= playerObject2,BG = backGroundIMG)
 
     pixelColour = backGroundIMG.get_at((enemy.x, enemy.y))
     if pixelColour.r == 0:
         generateEnemy()
     else:
-        enemies.appened(enemy)
+        enemies.append(enemy)
 
 def generateMap():
+    global backGroundIMG
     backGroundIMG = pygame.surfarray.make_surface(NMF.makeNoiseMap())
     pixelColourPlayer1 = backGroundIMG.get_at((590, 100))
     pixelColourPlayer2 = backGroundIMG.get_at((890, 100))
-    if pixelColourPlayer1 < 0:
-
+    if pixelColourPlayer1.r == 0:
         generateMap()
+    elif pixelColourPlayer2.r == 0:
+        generateMap()
+    else:
+        return backGroundIMG
 screen = pygame.display.set_mode((gameWindowWidth, gameWindowHeight))
 backGroundIMG = pygame.surfarray.make_surface(NMF.makeNoiseMap())
-#generateMap()
+generateMap()
 
 def collisionChecker(firstGameObject, secondGameObject):
         if firstGameObject.x + firstGameObject.width > secondGameObject.x and firstGameObject.x < secondGameObject.x + secondGameObject.width and firstGameObject.y + firstGameObject.height > secondGameObject.y and firstGameObject.y < secondGameObject.y + secondGameObject.height:
@@ -46,6 +50,9 @@ def collisionChecker(firstGameObject, secondGameObject):
 playerObject1 = PlayerClass(backGroundIMG,screen,xpos=590, ypos=100)
 
 playerObject2 = PlayerClass(backGroundIMG,screen,xpos=890, ypos=100)
+
+for i in range(5):
+    generateEnemy()
 
 done = False
 while not done:
@@ -102,6 +109,9 @@ while not done:
     playerObject1.update()
     playerObject2.update()
 
+    for enemy in enemies:
+        enemy.update()
+
         #DRAW GAME OBJECTS:
     #screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)
     screen.blit(backGroundIMG,(0,0))
@@ -109,7 +119,8 @@ while not done:
     playerObject1.draw()
     playerObject2.draw()
 
-
+    for enemy in enemies:
+        enemy.draw()
     pygame.display.flip()
     clock.tick(60)
 
