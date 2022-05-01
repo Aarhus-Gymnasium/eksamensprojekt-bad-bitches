@@ -1,5 +1,5 @@
 import random
-
+import numpy as np
 import NoiseMapFile as NMF
 from Player import PlayerClass
 from Enemy import EnemyClass
@@ -39,6 +39,14 @@ def generateMap():
         generateMap()
     else:
         return backGroundIMG
+
+def invertMap():
+    temp = pygame.surfarray.array2d(backGroundIMG)
+    blank = np.full((gameWindowWidth, gameWindowHeight), 255)
+    inverted = blank - temp
+    surface = pygame.surfarray.make_surface(inverted)
+    return surface
+
 screen = pygame.display.set_mode((gameWindowWidth, gameWindowHeight))
 backGroundIMG = pygame.surfarray.make_surface(NMF.makeNoiseMap())
 generateMap()
@@ -74,6 +82,8 @@ while not done:
                 playerObject1.xSpeed -= playerObject1.maxSpeed
             if event.key == pygame.K_RIGHT:
                 playerObject1.xSpeed += playerObject1.maxSpeed
+            if event.key == pygame.K_SPACE:
+                backGroundIMG = invertMap()
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
