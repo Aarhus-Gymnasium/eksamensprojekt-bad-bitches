@@ -28,17 +28,16 @@ def generateEnemy():
     else:
         enemies.append(enemy)
 
-def generateMap():
-    global backGroundIMG
-    backGroundIMG = pygame.surfarray.make_surface(NMF.makeNoiseMap())
-    pixelColourPlayer1 = backGroundIMG.get_at((590, 100))
-    pixelColourPlayer2 = backGroundIMG.get_at((890, 100))
-    if pixelColourPlayer1.r == 0:
-        generateMap()
-    elif pixelColourPlayer2.r == 0:
-        generateMap()
+def findSpawnForPlayer():
+    playerXRandomVal = random.randint(0,gameWindowWidth)
+    playerYRandomVal = random.randint(0, gameWindowHeight)
+    pixelColourPlayer = backGroundIMG.get_at((playerXRandomVal,playerYRandomVal))
+    if pixelColourPlayer.r == 0:
+        findSpawnForPlayer()
     else:
-        return backGroundIMG
+        return [playerXRandomVal,playerYRandomVal]
+
+
 
 def invertMap():
     temp = pygame.surfarray.array2d(backGroundIMG)
@@ -49,15 +48,17 @@ def invertMap():
 
 screen = pygame.display.set_mode((gameWindowWidth, gameWindowHeight))
 backGroundIMG = pygame.surfarray.make_surface(NMF.makeNoiseMap())
-generateMap()
+
 
 def collisionChecker(firstGameObject, secondGameObject):
         if firstGameObject.x + firstGameObject.width > secondGameObject.x and firstGameObject.x < secondGameObject.x + secondGameObject.width and firstGameObject.y + firstGameObject.height > secondGameObject.y and firstGameObject.y < secondGameObject.y + secondGameObject.height:
             return True
 
-playerObject1 = PlayerClass(backGroundIMG,screen,xpos=590, ypos=100)
 
-playerObject2 = PlayerClass(backGroundIMG,screen,xpos=890, ypos=100)
+playerObject1 = PlayerClass(backGroundIMG,screen,position=findSpawnForPlayer())
+
+
+playerObject2 = PlayerClass(backGroundIMG,screen,position=findSpawnForPlayer())
 
 for i in range(5):
     generateEnemy()

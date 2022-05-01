@@ -8,9 +8,9 @@ class PlayerClass:
     points=0
     color = (255,0,0)
 
-    def __init__(self,BG,screen,xpos,ypos):
-        self.x=xpos
-        self.y=ypos
+    def __init__(self,BG,screen,position):
+        self.x=position[0]
+        self.y=position[1]
         self.width = 20
         self.height = 20
         self.bg = BG
