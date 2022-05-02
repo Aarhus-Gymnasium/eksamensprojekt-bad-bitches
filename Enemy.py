@@ -32,7 +32,7 @@ class EnemyClass:
     def enemyDeadTimer(self):
         self.enemyTime +=1
 
-    def update(self):
+    def update(self,bg):
 
 
         self.futureX=self.x+self.xSpeed
@@ -48,18 +48,18 @@ class EnemyClass:
         if self.y<0:
             self.y=0
 
-        self.pixelColour = self.bg.get_at((self.futureX, self.futureY))
+        self.pixelColour = bg.get_at((self.futureX, self.futureY))
 
         if self.pixelColour.r > 100:
             if self.x < self.playerObject.x:
-                self.xSpeed = 1
+                self.xSpeed = 2
             if self.y < self.playerObject.y:
-                self.ySpeed = 1
+                self.ySpeed = 2
 
             if self.x > self.playerObject.x:
-                self.xSpeed =- 1
+                self.xSpeed =- 2
             if self.y > self.playerObject.y:
-                self.ySpeed =- 1
+                self.ySpeed =- 2
 
             self.x += self.xSpeed
             self.y += self.ySpeed
