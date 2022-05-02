@@ -29,12 +29,17 @@ def generateEnemy():
         enemies.append(enemy)
 
 def findSpawnForPlayer():
-    playerXRandomVal = random.randint(0,gameWindowWidth)
+    i = False
+    playerXRandomVal = random.randint(0, gameWindowWidth)
     playerYRandomVal = random.randint(0, gameWindowHeight)
-    pixelColourPlayer = backGroundIMG.get_at((playerXRandomVal,playerYRandomVal))
-    #if pixelColourPlayer.r == 0:
-        #findSpawnForPlayer()
-    #else:
+    while i == False:
+        playerXRandomVal = random.randint(0,gameWindowWidth)
+        playerYRandomVal = random.randint(0, gameWindowHeight)
+        pixelColourPlayer = backGroundIMG.get_at((playerXRandomVal,playerYRandomVal))
+        if pixelColourPlayer.r == 255:
+            i = True
+
+
     position = [playerXRandomVal, playerYRandomVal]
     return position
 
@@ -120,9 +125,12 @@ while not done:
 
     playerObject1.update(backGroundIMG)
     playerObject2.update(backGroundIMG)
-
+    if len(enemies) < 5:
+        generateEnemy()
     for enemy in enemies:
         enemy.update(backGroundIMG)
+
+
 
         #DRAW GAME OBJECTS:
     #screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)
