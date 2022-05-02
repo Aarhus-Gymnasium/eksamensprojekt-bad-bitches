@@ -44,4 +44,4 @@ class PlayerClass:
 
 
     def draw(self):
-        pygame.draw.rect(self.theScreen,self.color, pygame.Rect(self.x,self.y, 20,20))
+        pygame.draw.rect(self.theScreen,self.color, pygame.Rect(self.x,self.y, self.width,self.height))
