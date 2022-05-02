@@ -32,10 +32,11 @@ def findSpawnForPlayer():
     playerXRandomVal = random.randint(0,gameWindowWidth)
     playerYRandomVal = random.randint(0, gameWindowHeight)
     pixelColourPlayer = backGroundIMG.get_at((playerXRandomVal,playerYRandomVal))
-    if pixelColourPlayer.r == 0:
-        findSpawnForPlayer()
-    else:
-        return [playerXRandomVal,playerYRandomVal]
+    #if pixelColourPlayer.r == 0:
+        #findSpawnForPlayer()
+    #else:
+    position = [playerXRandomVal, playerYRandomVal]
+    return position
 
 
 
@@ -117,11 +118,11 @@ while not done:
             if event.key == pygame.K_d:
                 playerObject2.xSpeed -= playerObject2.maxSpeed
 
-    playerObject1.update()
-    playerObject2.update()
+    playerObject1.update(backGroundIMG)
+    playerObject2.update(backGroundIMG)
 
     for enemy in enemies:
-        enemy.update()
+        enemy.update(backGroundIMG)
 
         #DRAW GAME OBJECTS:
     #screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)

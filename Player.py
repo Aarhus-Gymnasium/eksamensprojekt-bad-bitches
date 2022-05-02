@@ -20,11 +20,11 @@ class PlayerClass:
         self.screenHeight = self.theScreen.get_size()[1]
 
 
-    def update(self):
+    def update(self,bg):
         self.futureX=self.x+self.xSpeed
         self.futureY=self.y+self.ySpeed
 
-        self.pixelColour = self.bg.get_at((self.futureX, self.futureY))
+        self.pixelColour = bg.get_at((self.futureX, self.futureY))
 
         if self.pixelColour.r > 100:
             self.x = self.futureX
