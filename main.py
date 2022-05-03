@@ -63,10 +63,10 @@ def collisionChecker(firstGameObject, secondGameObject):
             return True
 
 
-playerObject1 = PlayerClass(backGroundIMG,screen,position=findSpawnForPlayer())
+playerObject1 = PlayerClass(backGroundIMG,screen,position=findSpawnForPlayer(),PID=  1)
 
 
-playerObject2 = PlayerClass(backGroundIMG,screen,position=findSpawnForPlayer())
+playerObject2 = PlayerClass(backGroundIMG,screen,position=findSpawnForPlayer(),PID = 2)
 
 for i in range(5):
     generateEnemy()
@@ -94,6 +94,8 @@ while not done:
             if event.key == pygame.K_SPACE:
                 backGroundIMG = invertMap()
                 upgradeObject.update(playerObject1,playerObject2)
+                playerObject1.playerHP -= 10
+                playerObject2.playerHP -= 10
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:

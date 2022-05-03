@@ -6,7 +6,7 @@ from random import randint as rando
 class UpgradeClass:
 
     backgroundColor = (50,50,50)
-    color=( 35, 53, 197)
+    color=( 35, 180, 227)
 
 
 
@@ -57,6 +57,6 @@ class UpgradeClass:
 
     def draw(self):
         #Draw background
-        pygame.draw.rect(self.theScreen,self.backgroundColor, pygame.Rect(self.x,50,self.backgroundwidth ,self.backgroundheight))
+        pygame.draw.rect(self.theScreen,self.backgroundColor, pygame.Rect(self.x,0,self.backgroundwidth ,self.backgroundheight))
         #draw points
-        pygame.draw.rect(self.theScreen, self.color,pygame.Rect(self.x+5, 40, self.points * 3 + 1, 50))
+        pygame.draw.rect(self.theScreen, self.color,pygame.Rect(self.x+5, 5, self.points * 3 + 1, 40))
