@@ -14,9 +14,10 @@ class EnemyClass:
     width = 20
     height = 20
 
+
     image = pygame.image.load('Images/EvilBlob.png')
 
-    def __init__(self,screen,player,BG):
+    def __init__(self,screen,player,BG,X,Y):
         self.playerObject=player
         self.theScreen=screen
         self.bg = BG
@@ -25,8 +26,10 @@ class EnemyClass:
         self.screenHeight = self.theScreen.get_size()[1]
 
 
-        self.x = rando(0,self.theScreen.get_size()[0])
-        self.y = rando(0,self.theScreen.get_size()[1])
+        self.x = X
+        self.y = Y
+
+
 
 
     def enemyDeadTimer(self):

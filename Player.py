@@ -1,4 +1,5 @@
 import pygame
+from CircularBufferFile import CircularBuffer
 
 class PlayerClass:
 
@@ -9,6 +10,7 @@ class PlayerClass:
     color = (255,0,0)
     backgroundColor = (50, 50, 50)
     doubleShotPower = False
+    canTeleportPower = False
 
 
     def __init__(self,BG,screen,position,PID):
@@ -19,6 +21,8 @@ class PlayerClass:
         self.bg = BG
         self.playerID = PID
         self.playerHP = 100
+        self.CircularCordinateBuffer = CircularBuffer(180)  # Class for circular X cord lists for making items follow player
+
 
         self.theScreen=screen
         self.screenWidth = self.theScreen.get_size()[0] #
@@ -26,6 +30,10 @@ class PlayerClass:
 
 
     def update(self,bg):
+        self.CircularCordinateBuffer.enqueue((self.x, self.y))
+        if self.CircularCordinateBuffer.is_full():
+            self.CircularCordinateBuffer.dequeue()
+
         self.futureX=self.x+self.xSpeed
         self.futureY=self.y+self.ySpeed
 
@@ -46,7 +54,9 @@ class PlayerClass:
             self.x=0
         if self.y<0:
             self.y=0
-
+    def teleportBack(self):
+        if self.canTeleportPower == True:
+            self.x, self.y = self.CircularCordinateBuffer.frontOffSet(180)
 
     def draw(self):
         #draw player

@@ -10,7 +10,7 @@ import pygame
 
 pygame.init()
 pygame.mixer.init(frequency=44100, size=-16, channels=6, buffer=2048)
-font = pygame.font.Font('freesansbold.ttf', 32)
+font = pygame.font.Font('freesansbold.ttf', 130)
 
 
 clock = pygame.time.Clock()
@@ -20,17 +20,25 @@ enemies=[]
 shots = []
 
 def generateEnemy():
-    whoToTarget = random.randint(0,1)
-    if whoToTarget == 0:
-        enemy = EnemyClass(screen= screen,player= playerObject1,BG =backGroundIMG)
-    else:
-        enemy = EnemyClass(screen= screen,player= playerObject2,BG = backGroundIMG)
+    i = False
+    while i == False:
+        enemyXRandomVal = random.randint(1, gameWindowWidth - 1)
+        enemyYRandomVal = random.randint(1, gameWindowHeight - 1)
+        if abs(enemyXRandomVal - playerObject1.x and playerObject2.x) > 100 and abs(enemyYRandomVal - playerObject1.y and playerObject2.y > 100):
+            pixelColour = backGroundIMG.get_at((enemyXRandomVal, enemyYRandomVal))
+            if pixelColour.r == 255:
+                i = True
+                whoToTarget = random.randint(0, 1)
+                if whoToTarget == 0:
+                    enemy = EnemyClass(screen=screen, player=playerObject1, BG=backGroundIMG,X=enemyXRandomVal,Y=enemyYRandomVal)
+                else:
+                    enemy = EnemyClass(screen=screen, player=playerObject2, BG=backGroundIMG,X=enemyXRandomVal,Y=enemyYRandomVal)
+                enemies.append(enemy)
 
-    pixelColour = backGroundIMG.get_at((enemy.x, enemy.y))
-    if pixelColour.r == 0:
-        generateEnemy()
-    else:
-        enemies.append(enemy)
+
+
+
+
 
 def findSpawnForPlayer():
     i = False
@@ -70,7 +78,7 @@ playerObject1 = PlayerClass(backGroundIMG,screen,position=findSpawnForPlayer(),P
 
 playerObject2 = PlayerClass(backGroundIMG,screen,position=findSpawnForPlayer(),PID = 2)
 
-for i in range(5):
+for i in range(1):
     generateEnemy()
 
 done = False
@@ -95,13 +103,15 @@ while not done:
                 playerObject1.xSpeed += playerObject1.maxSpeed
             if event.key == pygame.K_SPACE:
                 backGroundIMG = invertMap()
+                upgradeObject.update(playerObject1, playerObject2)
+
             if event.key == pygame.K_m:
                 shots.append(ShotClass(screen, spawnPosX=playerObject1.x + playerObject1.width / 2, spawnPosY=playerObject1.y + playerObject1.height / 2, playerSpeedX=playerObject1.xSpeed, playerSpeedY=playerObject1.ySpeed))
                 if playerObject1.doubleShotPower == True:
                     shots.append(ShotClass(screen, spawnPosX=playerObject1.x + playerObject1.width / 2, spawnPosY=playerObject1.y + playerObject1.height / 2, playerSpeedX=playerObject1.xSpeed - (playerObject1.ySpeed / 2), playerSpeedY=playerObject1.ySpeed + (playerObject1.xSpeed / 2)))
                     shots.append(ShotClass(screen, spawnPosX=playerObject1.x + playerObject1.width / 2, spawnPosY=playerObject1.y + playerObject1.height / 2, playerSpeedX=playerObject1.xSpeed + (playerObject1.ySpeed / 2), playerSpeedY=playerObject1.ySpeed - (playerObject1.xSpeed / 2)))
-
-
+            if event.key == pygame.K_n:
+                playerObject1.teleportBack()
 
 
         if event.type == pygame.KEYUP:
@@ -124,12 +134,13 @@ while not done:
                 playerObject2.xSpeed -= playerObject2.maxSpeed
             if event.key == pygame.K_d:
                 playerObject2.xSpeed += playerObject2.maxSpeed
-            if event.key == pygame.K_t:
+            if event.key == pygame.K_y:
                 shots.append(ShotClass(screen, spawnPosX=playerObject2.x + playerObject2.width / 2, spawnPosY=playerObject2.y + playerObject2.height / 2, playerSpeedX=playerObject2.xSpeed, playerSpeedY=playerObject2.ySpeed))
                 if playerObject2.doubleShotPower == True:
                     shots.append(ShotClass(screen, spawnPosX=playerObject2.x + playerObject2.width / 2, spawnPosY=playerObject2.y + playerObject2.height / 2, playerSpeedX=playerObject2.xSpeed - (playerObject2.ySpeed / 2), playerSpeedY=playerObject2.ySpeed + (playerObject2.xSpeed / 2)))
                     shots.append(ShotClass(screen, spawnPosX=playerObject2.x + playerObject2.width / 2, spawnPosY=playerObject2.y + playerObject2.height / 2, playerSpeedX=playerObject2.xSpeed + (playerObject2.ySpeed / 2), playerSpeedY=playerObject2.ySpeed - (playerObject2.xSpeed / 2)))
-
+            if event.key == pygame.K_t:
+                playerObject2.teleportBack()
 
 
 
@@ -145,7 +156,7 @@ while not done:
 
     playerObject1.update(backGroundIMG)
     playerObject2.update(backGroundIMG)
-    if len(enemies) < 5:
+    if len(enemies) < upgradeObject.challengeLevel:
         generateEnemy()
 
     for shot in shots:
@@ -161,23 +172,28 @@ while not done:
 
         for shot in shots:
             if collisionChecker(shot, enemy):
-                enemyDead = True
-                upgradeObject.update(playerObject1, playerObject2)
-                shots.remove(shot)
-                enemies.remove(enemy)
+                if enemyDead == True:
+                    pass
+                else:
+                    enemyDead = True
+                    upgradeObject.update(playerObject1, playerObject2)
+                    shots.remove(shot)
+                    enemies.remove(enemy)
         if collisionChecker(enemy, playerObject1):
             playerObject1.playerHP -= 1
-            print("OUCH!")
+
         if collisionChecker(enemy, playerObject2):
             playerObject2.playerHP -= 1
-            print("OUCH!!!!")
+
 
 
 
         #DRAW GAME OBJECTS:
     #screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)
+
+
     screen.blit(backGroundIMG,(0,0))
-    upgradeObject.draw()
+    upgradeObject.draw(font)
 
     playerObject1.draw()
     playerObject2.draw()
