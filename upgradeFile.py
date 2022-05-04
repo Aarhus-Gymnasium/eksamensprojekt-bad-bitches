@@ -7,10 +7,10 @@ class UpgradeClass:
 
     backgroundColor = (50,50,50)
     color=( 35, 180, 227)
-    displayDoubleUpgrade = 0
-    displayTeleportPower = 0
+    displayPower = 0
     challengeLevel = 1
-
+    powerText = ''
+    playerDeadTimerVariable = 0
 
     def __init__(self,screen):
 
@@ -31,24 +31,18 @@ class UpgradeClass:
         if randomupgrade == 0:
             player1.maxSpeed += 1
             player2.maxSpeed += 1
-        if randomupgrade == 1:
-            player1.width += 5
-            player1.height += 5
-            player2.width += 5
-            player2.height += 5
-        if randomupgrade == 2:
-            player1.width -= 5
-            player1.height -= 5
-            player2.width -= 5
-            player2.height -= 5
+            self.displayPower = 1
+            self.powerText = 'Spped Upgrade!'
         if randomupgrade == 3:
             player1.doubleShotPower = True
             player2.doubleShotPower = True
-            self.displayDoubleUpgrade = 1
+            self.displayPower = 1
+            self.powerText = 'Double Shot!'
         if randomupgrade == 4:
             player1.canTeleportPower = True
             player2.canTeleportPower = True
-            self.displayTeleportPower = 1
+            self.displayPower = 1
+            self.powerText = 'Teleport Upgrade!'
 
 
 
@@ -69,20 +63,24 @@ class UpgradeClass:
         #draw points
         pygame.draw.rect(self.theScreen, self.color,pygame.Rect(self.x+5, 5, self.points * 3 + 1, 40))
 
-        if self.displayDoubleUpgrade > 0:
-            randomTextColor = ( 35, rando(100,200),  rando(200,255))
-            text = font.render('Double SHOT!', True, randomTextColor)
-            self.theScreen.blit(text, ( rando(52,67), (self.screenHeight / 2) - rando(92,108)))
-            self.displayDoubleUpgrade += 1
-            if self.displayDoubleUpgrade > 120:
-                self.displayDoubleUpgrade = 0
 
 
-        if self.displayTeleportPower > 0:
+        if self.displayPower > 0:
             randomTextColor = ( 35, rando(100,200),  rando(200,255))
-            text = font.render('Teleport!', True, randomTextColor)
-            self.theScreen.blit(text, ( rando(232,247), (self.screenHeight / 2) - rando(92,108)))
-            self.displayTeleportPower += 1
-            if self.displayTeleportPower > 120:
-                self.displayTeleportPower = 0
+            text = font.render(self.powerText, True, randomTextColor)
+            text_width, text_height = font.size(self.powerText)
+            self.theScreen.blit(text, ((self.screenWidth - text_width) / 2 - rando(-5,5), (self.screenHeight - text_height) / 2 - rando(-5,5)))
+            self.displayPower += 1
+            if self.displayPower > 120:
+                self.displayPower = 0
+
+    def playerIsDead(self,playerObject, surface,font):
+        randomTextColor = (35, rando(100, 200), rando(200, 255))
+        text = font.render('Player ' + str(playerObject.playerID) + ' is dead!', True, randomTextColor)
+        text_width, text_height = font.size('Player ' + str(playerObject.playerID) + 'is dead!')
+        surface.blit(text, ((playerObject.screenWidth - text_width) / 2 - rando(-5, 5),
+                            (playerObject.screenHeight - text_height) / 2 - rando(-5, 5)))
+        self.playerDeadTimerVariable += 1
+        if self.playerDeadTimerVariable > 120:
+            self.playerDeadTimerVariable = 0
 

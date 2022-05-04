@@ -1,5 +1,11 @@
+#import random
+
 import pygame
 from CircularBufferFile import CircularBuffer
+#from controlVariableFile import *
+
+
+
 
 class PlayerClass:
 
@@ -19,7 +25,25 @@ class PlayerClass:
         self.width = 20
         self.height = 20
         self.bg = BG
+
+
         self.playerID = PID
+        if self.playerID == 1:
+            self.upVariable = pygame.K_UP
+            self.downVariable = pygame.K_DOWN
+            self.leftVariable = pygame.K_LEFT
+            self.rightVariable = pygame.K_RIGHT
+            self.shootVariable = pygame.K_m
+            self.teleportVariable = pygame.K_n
+        if self.playerID == 2:
+
+            self.upVariable = pygame.K_w
+            self.downVariable = pygame.K_s
+            self.leftVariable = pygame.K_a
+            self.rightVariable = pygame.K_d
+            self.shootVariable = pygame.K_y
+            self.teleportVariable = pygame.K_t
+
         self.playerHP = 100
         self.CircularCordinateBuffer = CircularBuffer(180)  # Class for circular X cord lists for making items follow player
 
@@ -72,3 +96,4 @@ class PlayerClass:
             pygame.draw.rect(self.theScreen, self.backgroundColor, pygame.Rect(0, self.screenHeight- 50, 200, 50))
             # draw points
             pygame.draw.rect(self.theScreen, self.color, pygame.Rect(10, self.screenHeight- 45, (self.playerHP * 2) - 20, 40))
+

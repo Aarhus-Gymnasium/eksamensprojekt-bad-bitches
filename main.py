@@ -6,18 +6,23 @@ from Enemy import EnemyClass
 from Shot import ShotClass
 from upgradeFile import UpgradeClass
 import pygame
+from keyboardControlFunctionFile import movementfunction
 
 
 pygame.init()
 pygame.mixer.init(frequency=44100, size=-16, channels=6, buffer=2048)
-font = pygame.font.Font('freesansbold.ttf', 130)
+font = pygame.font.Font('freesansbold.ttf', 110)
 
 
 clock = pygame.time.Clock()
 gameWindowHeight=1024
 gameWindowWidth=1024
+
 enemies=[]
 shots = []
+players = []
+
+
 
 def generateEnemy():
     i = False
@@ -74,9 +79,9 @@ def collisionChecker(firstGameObject, secondGameObject):
 
 
 playerObject1 = PlayerClass(backGroundIMG,screen,position=findSpawnForPlayer(),PID=  1)
-
-
 playerObject2 = PlayerClass(backGroundIMG,screen,position=findSpawnForPlayer(),PID = 2)
+players.append(playerObject1)
+players.append(playerObject2)
 
 for i in range(1):
     generateEnemy()
@@ -92,70 +97,17 @@ while not done:
 
 
         #KEY PRESSES:
+        for playerObject in players:
+            movementfunction(event=event, playerObject=playerObject, shots=shots, ShotClass=ShotClass, screen=screen)
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                playerObject1.ySpeed -= playerObject1.maxSpeed
-            if event.key == pygame.K_DOWN:
-                playerObject1.ySpeed += playerObject1.maxSpeed
-            if event.key == pygame.K_LEFT:
-                playerObject1.xSpeed -= playerObject1.maxSpeed
-            if event.key == pygame.K_RIGHT:
-                playerObject1.xSpeed += playerObject1.maxSpeed
             if event.key == pygame.K_SPACE:
                 backGroundIMG = invertMap()
-                upgradeObject.update(playerObject1, playerObject2)
-
-            if event.key == pygame.K_m:
-                shots.append(ShotClass(screen, spawnPosX=playerObject1.x + playerObject1.width / 2, spawnPosY=playerObject1.y + playerObject1.height / 2, playerSpeedX=playerObject1.xSpeed, playerSpeedY=playerObject1.ySpeed))
-                if playerObject1.doubleShotPower == True:
-                    shots.append(ShotClass(screen, spawnPosX=playerObject1.x + playerObject1.width / 2, spawnPosY=playerObject1.y + playerObject1.height / 2, playerSpeedX=playerObject1.xSpeed - (playerObject1.ySpeed / 2), playerSpeedY=playerObject1.ySpeed + (playerObject1.xSpeed / 2)))
-                    shots.append(ShotClass(screen, spawnPosX=playerObject1.x + playerObject1.width / 2, spawnPosY=playerObject1.y + playerObject1.height / 2, playerSpeedX=playerObject1.xSpeed + (playerObject1.ySpeed / 2), playerSpeedY=playerObject1.ySpeed - (playerObject1.xSpeed / 2)))
-            if event.key == pygame.K_n:
-                playerObject1.teleportBack()
+    for playerObject in players:
+        playerObject.update(backGroundIMG)
+        if playerObject.playerHP == 0:
+            players.remove(playerObject)
 
 
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_UP:
-                playerObject1.ySpeed += playerObject1.maxSpeed
-            if event.key == pygame.K_DOWN:
-                playerObject1.ySpeed -= playerObject1.maxSpeed
-            if event.key == pygame.K_LEFT:
-                playerObject1.xSpeed += playerObject1.maxSpeed
-            if event.key == pygame.K_RIGHT:
-                playerObject1.xSpeed -= playerObject1.maxSpeed
-
-        # KEY PRESSES:
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w:
-                playerObject2.ySpeed -= playerObject2.maxSpeed
-            if event.key == pygame.K_s:
-                playerObject2.ySpeed += playerObject2.maxSpeed
-            if event.key == pygame.K_a:
-                playerObject2.xSpeed -= playerObject2.maxSpeed
-            if event.key == pygame.K_d:
-                playerObject2.xSpeed += playerObject2.maxSpeed
-            if event.key == pygame.K_y:
-                shots.append(ShotClass(screen, spawnPosX=playerObject2.x + playerObject2.width / 2, spawnPosY=playerObject2.y + playerObject2.height / 2, playerSpeedX=playerObject2.xSpeed, playerSpeedY=playerObject2.ySpeed))
-                if playerObject2.doubleShotPower == True:
-                    shots.append(ShotClass(screen, spawnPosX=playerObject2.x + playerObject2.width / 2, spawnPosY=playerObject2.y + playerObject2.height / 2, playerSpeedX=playerObject2.xSpeed - (playerObject2.ySpeed / 2), playerSpeedY=playerObject2.ySpeed + (playerObject2.xSpeed / 2)))
-                    shots.append(ShotClass(screen, spawnPosX=playerObject2.x + playerObject2.width / 2, spawnPosY=playerObject2.y + playerObject2.height / 2, playerSpeedX=playerObject2.xSpeed + (playerObject2.ySpeed / 2), playerSpeedY=playerObject2.ySpeed - (playerObject2.xSpeed / 2)))
-            if event.key == pygame.K_t:
-                playerObject2.teleportBack()
-
-
-
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_w:
-                playerObject2.ySpeed += playerObject2.maxSpeed
-            if event.key == pygame.K_s:
-                playerObject2.ySpeed -= playerObject2.maxSpeed
-            if event.key == pygame.K_a:
-                playerObject2.xSpeed += playerObject2.maxSpeed
-            if event.key == pygame.K_d:
-                playerObject2.xSpeed -= playerObject2.maxSpeed
-
-    playerObject1.update(backGroundIMG)
-    playerObject2.update(backGroundIMG)
     if len(enemies) < upgradeObject.challengeLevel:
         generateEnemy()
 
@@ -194,9 +146,14 @@ while not done:
 
     screen.blit(backGroundIMG,(0,0))
     upgradeObject.draw(font)
+    for playerObject in players:
+        if playerObject.playerHP < 1:
+            upgradeObject.playerDeadTimerVariable = 1
+        if upgradeObject.playerDeadTimerVariable < 120 and upgradeObject.playerDeadTimerVariable != 0:
+            upgradeObject.playerIsDead(playerObject,screen,font)
+    for playerObject in players:
+        playerObject.draw()
 
-    playerObject1.draw()
-    playerObject2.draw()
 
     for shot in shots:
         shot.draw()

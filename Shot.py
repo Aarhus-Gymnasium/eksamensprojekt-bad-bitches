@@ -2,8 +2,8 @@ import pygame
 
 class ShotClass:
 
-    width = 5
-    height = 5
+    width = 10
+    height = 10
     color = (255, 165, 0)
 
 
