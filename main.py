@@ -97,6 +97,12 @@ while not done:
                 backGroundIMG = invertMap()
             if event.key == pygame.K_m:
                 shots.append(ShotClass(screen, spawnPosX=playerObject1.x + playerObject1.width / 2, spawnPosY=playerObject1.y + playerObject1.height / 2, playerSpeedX=playerObject1.xSpeed, playerSpeedY=playerObject1.ySpeed))
+                if playerObject1.doubleShotPower == True:
+                    shots.append(ShotClass(screen, spawnPosX=playerObject1.x + playerObject1.width / 2, spawnPosY=playerObject1.y + playerObject1.height / 2, playerSpeedX=playerObject1.xSpeed - (playerObject1.ySpeed / 2), playerSpeedY=playerObject1.ySpeed + (playerObject1.xSpeed / 2)))
+                    shots.append(ShotClass(screen, spawnPosX=playerObject1.x + playerObject1.width / 2, spawnPosY=playerObject1.y + playerObject1.height / 2, playerSpeedX=playerObject1.xSpeed + (playerObject1.ySpeed / 2), playerSpeedY=playerObject1.ySpeed - (playerObject1.xSpeed / 2)))
+
+
+
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
@@ -120,6 +126,12 @@ while not done:
                 playerObject2.xSpeed += playerObject2.maxSpeed
             if event.key == pygame.K_t:
                 shots.append(ShotClass(screen, spawnPosX=playerObject2.x + playerObject2.width / 2, spawnPosY=playerObject2.y + playerObject2.height / 2, playerSpeedX=playerObject2.xSpeed, playerSpeedY=playerObject2.ySpeed))
+                if playerObject2.doubleShotPower == True:
+                    shots.append(ShotClass(screen, spawnPosX=playerObject2.x + playerObject2.width / 2, spawnPosY=playerObject2.y + playerObject2.height / 2, playerSpeedX=playerObject2.xSpeed - (playerObject2.ySpeed / 2), playerSpeedY=playerObject2.ySpeed + (playerObject2.xSpeed / 2)))
+                    shots.append(ShotClass(screen, spawnPosX=playerObject2.x + playerObject2.width / 2, spawnPosY=playerObject2.y + playerObject2.height / 2, playerSpeedX=playerObject2.xSpeed + (playerObject2.ySpeed / 2), playerSpeedY=playerObject2.ySpeed - (playerObject2.xSpeed / 2)))
+
+
+
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_w:
@@ -135,12 +147,14 @@ while not done:
     playerObject2.update(backGroundIMG)
     if len(enemies) < 5:
         generateEnemy()
+
+    for shot in shots:
+        shot.update()
+
     for enemy in enemies:
         enemyDead = False
         enemy.update(backGroundIMG)
 
-        for shot in shots:
-            shot.update()
 
         #if enemy.x > gameWindowWidth or enemy.y > gameWindowHeight or enemy.x < 0 or enemy.y < 0:
             #enemyDead = True

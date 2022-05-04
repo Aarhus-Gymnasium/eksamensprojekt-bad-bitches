@@ -16,8 +16,8 @@ class ShotClass:
 
 
     def update(self):
-        self.x += self.xSpeed
-        self.y += self.ySpeed
+        self.x += self.xSpeed * 3
+        self.y += self.ySpeed * 3
 
     def draw(self):
         pygame.draw.rect(self.theScreen, self.color, pygame.Rect(self.x, self.y, self.width, self.height))

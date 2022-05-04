@@ -39,9 +39,9 @@ class UpgradeClass:
             player1.height -= 5
             player2.width -= 5
             player2.height -= 5
-        #if randomupgrade == 3:
-            #player1.doubleShot = 1
-            #player2.DoubleShot = 1
+        if randomupgrade == 3:
+            player1.doubleShotPower = True
+            player2.doubleShotPower = True
 
 
 

@@ -8,6 +8,7 @@ class PlayerClass:
     points=0
     color = (255,0,0)
     backgroundColor = (50, 50, 50)
+    doubleShotPower = False
 
 
     def __init__(self,BG,screen,position,PID):
