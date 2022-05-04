@@ -152,10 +152,10 @@ while not done:
                 shots.remove(shot)
                 enemies.remove(enemy)
         if collisionChecker(enemy, playerObject1):
-            playerObject1.playerHP -= 10
+            playerObject1.playerHP -= 1
             print("OUCH!")
         if collisionChecker(enemy, playerObject2):
-            playerObject2.playerHP -= 10
+            playerObject2.playerHP -= 1
             print("OUCH!!!!")
 
 
