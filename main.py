@@ -3,6 +3,7 @@ import numpy as np
 import NoiseMapFile as NMF
 from Player import PlayerClass
 from Enemy import EnemyClass
+from Shot import ShotClass
 from upgradeFile import UpgradeClass
 import pygame
 
@@ -16,6 +17,7 @@ clock = pygame.time.Clock()
 gameWindowHeight=1024
 gameWindowWidth=1024
 enemies=[]
+shots = []
 
 def generateEnemy():
     whoToTarget = random.randint(0,1)
@@ -93,9 +95,8 @@ while not done:
                 playerObject1.xSpeed += playerObject1.maxSpeed
             if event.key == pygame.K_SPACE:
                 backGroundIMG = invertMap()
-                upgradeObject.update(playerObject1,playerObject2)
-                playerObject1.playerHP -= 10
-                playerObject2.playerHP -= 10
+            if event.key == pygame.K_m:
+                shots.append(ShotClass(screen, spawnPosX=playerObject1.x + playerObject1.width / 2, spawnPosY=playerObject1.y + playerObject1.height / 2, playerSpeedX=playerObject1.xSpeed, playerSpeedY=playerObject1.ySpeed))
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
@@ -117,6 +118,8 @@ while not done:
                 playerObject2.xSpeed -= playerObject2.maxSpeed
             if event.key == pygame.K_d:
                 playerObject2.xSpeed += playerObject2.maxSpeed
+            if event.key == pygame.K_t:
+                shots.append(ShotClass(screen, spawnPosX=playerObject2.x + playerObject2.width / 2, spawnPosY=playerObject2.y + playerObject2.height / 2, playerSpeedX=playerObject2.xSpeed, playerSpeedY=playerObject2.ySpeed))
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_w:
@@ -133,7 +136,27 @@ while not done:
     if len(enemies) < 5:
         generateEnemy()
     for enemy in enemies:
+        enemyDead = False
         enemy.update(backGroundIMG)
+
+        for shot in shots:
+            shot.update()
+
+        #if enemy.x > gameWindowWidth or enemy.y > gameWindowHeight or enemy.x < 0 or enemy.y < 0:
+            #enemyDead = True
+
+        for shot in shots:
+            if collisionChecker(shot, enemy):
+                enemyDead = True
+                upgradeObject.update(playerObject1, playerObject2)
+                shots.remove(shot)
+                enemies.remove(enemy)
+        if collisionChecker(enemy, playerObject1):
+            playerObject1.playerHP -= 10
+            print("OUCH!")
+        if collisionChecker(enemy, playerObject2):
+            playerObject2.playerHP -= 10
+            print("OUCH!!!!")
 
 
 
@@ -145,6 +168,8 @@ while not done:
     playerObject1.draw()
     playerObject2.draw()
 
+    for shot in shots:
+        shot.draw()
 
     for enemy in enemies:
         enemy.draw()

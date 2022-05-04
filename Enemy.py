@@ -14,7 +14,7 @@ class EnemyClass:
     width = 20
     height = 20
 
-
+    image = pygame.image.load('Images/EvilBlob.png')
 
     def __init__(self,screen,player,BG):
         self.playerObject=player
@@ -68,4 +68,5 @@ class EnemyClass:
 
 
     def draw(self):
-        pygame.draw.rect(self.theScreen,self.color, pygame.Rect(self.x,self.y, 20,20))
+        #pygame.draw.rect(self.theScreen,self.color, pygame.Rect(self.x,self.y, 20,20))
+        self.theScreen.blit(self.image, (self.x, self.y))
