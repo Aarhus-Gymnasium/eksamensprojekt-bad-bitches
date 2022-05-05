@@ -32,7 +32,7 @@ class UpgradeClass:
             player1.maxSpeed += 1
             player2.maxSpeed += 1
             self.displayPower = 1
-            self.powerText = 'Spped Upgrade!'
+            self.powerText = 'Speed Upgrade!'
         if randomupgrade == 3:
             player1.doubleShotPower = True
             player2.doubleShotPower = True

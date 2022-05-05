@@ -61,23 +61,22 @@ class PlayerClass:
         self.futureX=self.x+self.xSpeed
         self.futureY=self.y+self.ySpeed
 
-        self.pixelColour = bg.get_at((self.futureX, self.futureY))
-
-        if self.pixelColour.r > 100:
-            self.x = self.futureX
-
-            self.y = self.futureY
 
 
-        #safety to prevent overshoot:
-        if self.x+self.width > self.screenWidth:
-            self.x = self.screenWidth-self.width
-        if self.y+self.height > self.screenHeight:
-            self.y = self.screenHeight-self.height
-        if self.x<0:
-            self.x=0
-        if self.y<0:
-            self.y=0
+
+        if self.futureX > 0 and self.futureX < self.screenWidth - self.width:
+            self.pixelColour = bg.get_at((self.futureX, self.y))
+
+            if self.pixelColour.r > 100:
+                self.x = self.futureX
+
+        if self.futureY > 0 and self.futureY < self.screenHeight-self.height:
+            self.pixelColour = bg.get_at((self.x, self.futureY))
+
+            if self.pixelColour.r > 100:
+                self.y = self.futureY
+
+
     def teleportBack(self):
         if self.canTeleportPower == True:
             self.x, self.y = self.CircularCordinateBuffer.frontOffSet(180)

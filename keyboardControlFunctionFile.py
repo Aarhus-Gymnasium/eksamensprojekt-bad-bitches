@@ -1,6 +1,9 @@
 import pygame
+from Shot import ShotClass
 
-def movementfunction(event,playerObject,shots,ShotClass,screen):
+global shots
+global screen
+def movementfunction(playerObject,event):
     if event.type == pygame.KEYDOWN:
         if event.key == playerObject.upVariable:
             playerObject.ySpeed -= playerObject.maxSpeed

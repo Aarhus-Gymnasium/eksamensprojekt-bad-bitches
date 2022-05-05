@@ -3,7 +3,7 @@ import numpy as np
 import NoiseMapFile as NMF
 from Player import PlayerClass
 from Enemy import EnemyClass
-from Shot import ShotClass
+#from Shot import ShotClass
 from upgradeFile import UpgradeClass
 import pygame
 from keyboardControlFunctionFile import movementfunction
@@ -83,8 +83,9 @@ playerObject2 = PlayerClass(backGroundIMG,screen,position=findSpawnForPlayer(),P
 players.append(playerObject1)
 players.append(playerObject2)
 
-for i in range(1):
-    generateEnemy()
+
+
+generateEnemy()
 
 done = False
 while not done:
@@ -98,7 +99,7 @@ while not done:
 
         #KEY PRESSES:
         for playerObject in players:
-            movementfunction(event=event, playerObject=playerObject, shots=shots, ShotClass=ShotClass, screen=screen)
+            movementfunction(playerObject,event)
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 backGroundIMG = invertMap()
@@ -108,34 +109,35 @@ while not done:
             players.remove(playerObject)
 
 
-    if len(enemies) < upgradeObject.challengeLevel:
-        generateEnemy()
 
-    for shot in shots:
-        shot.update()
-
-    for enemy in enemies:
-        enemyDead = False
-        enemy.update(backGroundIMG)
-
-
-        #if enemy.x > gameWindowWidth or enemy.y > gameWindowHeight or enemy.x < 0 or enemy.y < 0:
-            #enemyDead = True
+    #Update functions
+    if players != []:
+        if len(enemies) < upgradeObject.challengeLevel:
+            generateEnemy()
 
         for shot in shots:
-            if collisionChecker(shot, enemy):
-                if enemyDead == True:
-                    pass
-                else:
-                    enemyDead = True
-                    upgradeObject.update(playerObject1, playerObject2)
-                    shots.remove(shot)
-                    enemies.remove(enemy)
-        if collisionChecker(enemy, playerObject1):
-            playerObject1.playerHP -= 1
+            shot.update()
 
-        if collisionChecker(enemy, playerObject2):
-            playerObject2.playerHP -= 1
+        for enemy in enemies:
+            enemyDead = False
+            enemy.update(backGroundIMG)
+
+
+            for shot in shots:
+                if collisionChecker(shot, enemy):
+                    if enemyDead == True:
+                        pass
+                    else:
+                        enemyDead = True
+                        upgradeObject.update(playerObject1, playerObject2)
+                        shots.remove(shot)
+                        enemies.remove(enemy)
+            if collisionChecker(enemy, playerObject1):
+                playerObject1.playerHP -= 1
+
+            if collisionChecker(enemy, playerObject2):
+                playerObject2.playerHP -= 1
+
 
 
 
@@ -146,20 +148,28 @@ while not done:
 
     screen.blit(backGroundIMG,(0,0))
     upgradeObject.draw(font)
-    for playerObject in players:
-        if playerObject.playerHP < 1:
-            upgradeObject.playerDeadTimerVariable = 1
-        if upgradeObject.playerDeadTimerVariable < 120 and upgradeObject.playerDeadTimerVariable != 0:
-            upgradeObject.playerIsDead(playerObject,screen,font)
-    for playerObject in players:
-        playerObject.draw()
+    if players != []:
+        for playerObject in players:
+            if playerObject.playerHP < 1:
+                upgradeObject.playerDeadTimerVariable = 1
+            if upgradeObject.playerDeadTimerVariable < 120 and upgradeObject.playerDeadTimerVariable != 0:
+                upgradeObject.playerIsDead(playerObject,screen,font)
+        for playerObject in players:
+            playerObject.draw()
 
 
-    for shot in shots:
-        shot.draw()
+        for shot in shots:
+            shot.draw()
 
-    for enemy in enemies:
-        enemy.draw()
+        for enemy in enemies:
+            enemy.draw()
+    else:
+        text_width, text_height = font.size('Everyone is dead')
+        text = font.render('Everyone is dead', True, (200, 0, 0))
+        screen.blit(text, ((gameWindowWidth - text_width) / 2, (gameWindowHeight - text_height) / 2 - 100))
+        text_width, text_height = font.size('Level: '+ str(upgradeObject.challengeLevel))
+        text = font.render('Level: '+ str(upgradeObject.challengeLevel), True, (200, 0, 0))
+        screen.blit(text, ((gameWindowWidth - text_width) / 2, (gameWindowHeight - text_height) / 2 + 100))
     pygame.display.flip()
     clock.tick(60)
 
