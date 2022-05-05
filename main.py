@@ -99,7 +99,7 @@ while not done:
 
         #KEY PRESSES:
         for playerObject in players:
-            movementfunction(playerObject,event)
+            movementfunction(playerObject,event,shots,screen)
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 backGroundIMG = invertMap()
@@ -110,13 +110,16 @@ while not done:
 
 
 
-    #Update functions
+    #Update functions)
     if players != []:
         if len(enemies) < upgradeObject.challengeLevel:
             generateEnemy()
 
         for shot in shots:
             shot.update()
+            if shot.x > gameWindowWidth or shot.x < 0 or shot.y > gameWindowHeight or shot.y < 0:
+                shots.remove(shot)
+
 
         for enemy in enemies:
             enemyDead = False

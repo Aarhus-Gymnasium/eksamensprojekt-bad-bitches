@@ -13,14 +13,14 @@ class PlayerClass:
     ySpeed=0
     maxSpeed=6
     points=0
-    color = (255,0,0)
+
     backgroundColor = (50, 50, 50)
     doubleShotPower = False
     canTeleportPower = False
 
 
     def __init__(self,BG,screen,position,PID):
-        self.x=position[0]
+        self.x = position[0]
         self.y=position[1]
         self.width = 20
         self.height = 20
@@ -35,6 +35,7 @@ class PlayerClass:
             self.rightVariable = pygame.K_RIGHT
             self.shootVariable = pygame.K_m
             self.teleportVariable = pygame.K_n
+            self.color = (255,0,0)
         if self.playerID == 2:
 
             self.upVariable = pygame.K_w
@@ -43,6 +44,7 @@ class PlayerClass:
             self.rightVariable = pygame.K_d
             self.shootVariable = pygame.K_y
             self.teleportVariable = pygame.K_t
+            self.color = (0, 0, 255)
 
         self.playerHP = 100
         self.CircularCordinateBuffer = CircularBuffer(180)  # Class for circular X cord lists for making items follow player

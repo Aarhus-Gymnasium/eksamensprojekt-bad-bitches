@@ -27,18 +27,18 @@ class UpgradeClass:
         self.points = 0
 
     def upgradePlayers(self,player1,player2):
-        randomupgrade = rando(0,4)
+        randomupgrade = rando(0,2)
         if randomupgrade == 0:
             player1.maxSpeed += 1
             player2.maxSpeed += 1
             self.displayPower = 1
             self.powerText = 'Speed Upgrade!'
-        if randomupgrade == 3:
+        if randomupgrade == 1:
             player1.doubleShotPower = True
             player2.doubleShotPower = True
             self.displayPower = 1
             self.powerText = 'Double Shot!'
-        if randomupgrade == 4:
+        if randomupgrade == 2:
             player1.canTeleportPower = True
             player2.canTeleportPower = True
             self.displayPower = 1
@@ -47,7 +47,7 @@ class UpgradeClass:
 
 
     def update(self,player1,player2):
-        self.points += 50
+        self.points += 10
 
         if self.points > 100:
             self.points -= 100
