@@ -6,7 +6,8 @@ from Enemy import EnemyClass
 #from Shot import ShotClass
 from upgradeFile import UpgradeClass
 import pygame
-from keyboardControlFunctionFile import movementfunction
+from Shot import ShotClass
+#from keyboardControlFunctionFile import movementfunction
 
 
 pygame.init()
@@ -23,7 +24,45 @@ shots = []
 players = []
 
 
+def movementfunction(event):
+    for playerObject in players:
+        if event.type == pygame.KEYDOWN:
+            if event.key == playerObject.playerMovement["upVariable"]:
+                playerObject.ySpeed -= playerObject.maxSpeed
+            if event.key == playerObject.playerMovement["downVariable"]:
+                playerObject.ySpeed += playerObject.maxSpeed
+            if event.key == playerObject.playerMovement["leftVariable"]:
+                playerObject.xSpeed -= playerObject.maxSpeed
+            if event.key == playerObject.playerMovement["rightVariable"]:
+                playerObject.xSpeed += playerObject.maxSpeed
 
+
+
+            if event.key == playerObject.playerMovement["shootVariable"]:
+                shots.append(ShotClass(screen, spawnPosX=playerObject.x + playerObject.width / 2,
+                                       spawnPosY=playerObject.y + playerObject.height / 2, playerSpeedX=playerObject.xSpeed,
+                                       playerSpeedY=playerObject.ySpeed))
+                if playerObject.doubleShotPower == True:
+                    shots.append(ShotClass(screen, spawnPosX=playerObject.x + playerObject.width / 2,
+                                           spawnPosY=playerObject.y + playerObject.height / 2,
+                                           playerSpeedX=playerObject.xSpeed - (playerObject.ySpeed / 2),
+                                           playerSpeedY=playerObject.ySpeed + (playerObject.xSpeed / 2)))
+                    shots.append(ShotClass(screen, spawnPosX=playerObject.x + playerObject.width / 2,
+                                           spawnPosY=playerObject.y + playerObject.height / 2,
+                                           playerSpeedX=playerObject.xSpeed + (playerObject.ySpeed / 2),
+                                           playerSpeedY=playerObject.ySpeed - (playerObject.xSpeed / 2)))
+            if event.key == playerObject.playerMovement["teleportVariable"]:
+                playerObject.teleportBack()
+
+        if event.type == pygame.KEYUP:
+            if event.key == playerObject.playerMovement["upVariable"]:
+                playerObject.ySpeed += playerObject.maxSpeed
+            if event.key ==playerObject.playerMovement["downVariable"]:
+                playerObject.ySpeed -= playerObject.maxSpeed
+            if event.key == playerObject.playerMovement["leftVariable"]:
+                playerObject.xSpeed += playerObject.maxSpeed
+            if event.key == playerObject.playerMovement["rightVariable"]:
+                playerObject.xSpeed -= playerObject.maxSpeed
 def generateEnemy():
     i = False
     while i == False:
@@ -98,8 +137,9 @@ while not done:
 
 
         #KEY PRESSES:
-        for playerObject in players:
-            movementfunction(playerObject,event,shots,screen)
+        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
+      #      for playerObject in players:
+            movementfunction(event)
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 backGroundIMG = invertMap()
@@ -132,7 +172,14 @@ while not done:
                         pass
                     else:
                         enemyDead = True
-                        upgradeObject.update(playerObject1, playerObject2)
+
+                        shouldGetUpgrade = upgradeObject.update()
+                        if shouldGetUpgrade == True:
+                            randomUpgrade = random.randint(0,2)
+                            for playerObject in players:
+                                upgradeObject.upgradePlayers(playerObject,randomUpgrade)
+
+
                         shots.remove(shot)
                         enemies.remove(enemy)
             if collisionChecker(enemy, playerObject1):

@@ -2,7 +2,7 @@
 
 import pygame
 from CircularBufferFile import CircularBuffer
-#from controlVariableFile import *
+import controlVariableFile
 
 
 
@@ -11,12 +11,14 @@ class PlayerClass:
 
     xSpeed=0
     ySpeed=0
-    maxSpeed=6
+
     points=0
 
     backgroundColor = (50, 50, 50)
     doubleShotPower = False
     canTeleportPower = False
+
+    color = (50, 50, 00)
 
 
     def __init__(self,BG,screen,position,PID):
@@ -25,26 +27,17 @@ class PlayerClass:
         self.width = 20
         self.height = 20
         self.bg = BG
+        self.maxSpeed=6
+       # self.playerMovement = {}
 
 
         self.playerID = PID
         if self.playerID == 1:
-            self.upVariable = pygame.K_UP
-            self.downVariable = pygame.K_DOWN
-            self.leftVariable = pygame.K_LEFT
-            self.rightVariable = pygame.K_RIGHT
-            self.shootVariable = pygame.K_m
-            self.teleportVariable = pygame.K_n
-            self.color = (255,0,0)
+            self.playerMovement = controlVariableFile.playerVariableList[0]
         if self.playerID == 2:
+            self.playerMovement = controlVariableFile.playerVariableList[1]
 
-            self.upVariable = pygame.K_w
-            self.downVariable = pygame.K_s
-            self.leftVariable = pygame.K_a
-            self.rightVariable = pygame.K_d
-            self.shootVariable = pygame.K_y
-            self.teleportVariable = pygame.K_t
-            self.color = (0, 0, 255)
+        self.playerMovement = controlVariableFile.playerVariableList[self.playerID-1]
 
         self.playerHP = 100
         self.CircularCordinateBuffer = CircularBuffer(180)  # Class for circular X cord lists for making items follow player
@@ -85,16 +78,16 @@ class PlayerClass:
 
     def draw(self):
         #draw player
-        pygame.draw.rect(self.theScreen,self.color, pygame.Rect(self.x,self.y, self.width,self.height))
+        pygame.draw.rect(self.theScreen,self.playerMovement["color"], pygame.Rect(self.x,self.y, self.width,self.height))
 
         #Draw Healthbar
         if self.playerID == 1:
             pygame.draw.rect(self.theScreen, self.backgroundColor, pygame.Rect(self.screenWidth - 200, self.screenHeight- 50, 200, 50))
             # draw points
-            pygame.draw.rect(self.theScreen, self.color, pygame.Rect(self.screenWidth - 190, self.screenHeight- 45, (self.playerHP * 2) - 20, 40))
+            pygame.draw.rect(self.theScreen, self.playerMovement["color"], pygame.Rect(self.screenWidth - 190, self.screenHeight- 45, (self.playerHP * 2) - 20, 40))
 
         if self.playerID == 2:
             pygame.draw.rect(self.theScreen, self.backgroundColor, pygame.Rect(0, self.screenHeight- 50, 200, 50))
             # draw points
-            pygame.draw.rect(self.theScreen, self.color, pygame.Rect(10, self.screenHeight- 45, (self.playerHP * 2) - 20, 40))
+            pygame.draw.rect(self.theScreen, self.playerMovement["color"], pygame.Rect(10, self.screenHeight- 45, (self.playerHP * 2) - 20, 40))
 

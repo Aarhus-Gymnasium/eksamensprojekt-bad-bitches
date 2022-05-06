@@ -26,33 +26,40 @@ class UpgradeClass:
         self.y = 300
         self.points = 0
 
-    def upgradePlayers(self,player1,player2):
-        randomupgrade = rando(0,2)
+    def upgradePlayers(self,player,randomupgrade):
+        #This code upgrades the players speed, and fixes a drift that would happen when you upgraded before.
+        #This code is adapted from https://github.com/Farpeja02/theGame/commit/faee157b0bd59ed1caf608528677f0b4b5225766 from the changeSpeedToFixed method.
         if randomupgrade == 0:
-            player1.maxSpeed += 1
-            player2.maxSpeed += 1
+            player.maxSpeed += 1
+            if player.xSpeed > 0:
+                player.xSpeed = player.maxSpeed
+            elif player.xSpeed < 0:
+                player.xSpeed = (-1) * player.maxSpeed
+            if player.ySpeed > 0:
+                player.ySpeed = player.maxSpeed
+            elif player.ySpeed < 0:
+                player.ySpeed = (-1) * player.maxSpeed
             self.displayPower = 1
             self.powerText = 'Speed Upgrade!'
         if randomupgrade == 1:
-            player1.doubleShotPower = True
-            player2.doubleShotPower = True
+            player.doubleShotPower = True
             self.displayPower = 1
             self.powerText = 'Double Shot!'
         if randomupgrade == 2:
-            player1.canTeleportPower = True
-            player2.canTeleportPower = True
+            player.canTeleportPower = True
             self.displayPower = 1
             self.powerText = 'Teleport Upgrade!'
 
 
 
-    def update(self,player1,player2):
-        self.points += 10
-
+    def update(self):
+        self.points += 40
         if self.points > 100:
             self.points -= 100
-            self.upgradePlayers(player1,player2)
             self.challengeLevel += 1
+            return True
+        else:
+            return False
 
 
 
