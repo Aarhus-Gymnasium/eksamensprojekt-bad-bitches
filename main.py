@@ -78,12 +78,12 @@ def generateEnemy():
                 else:
                     enemy = EnemyClass(screen=screen, player=playerObject2, BG=backGroundIMG,X=enemyXRandomVal,Y=enemyYRandomVal)
                 enemies.append(enemy)
-
-
-
-
-
-
+def invertMap():
+    temp = pygame.surfarray.array2d(backGroundIMG)
+    blank = np.full((gameWindowWidth, gameWindowHeight), 255)
+    inverted = blank - temp
+    surface = pygame.surfarray.make_surface(inverted)
+    return surface
 def findSpawnForPlayer():
     i = False
     playerXRandomVal = random.randint(20, gameWindowWidth - 20)
@@ -98,32 +98,18 @@ def findSpawnForPlayer():
 
     position = [playerXRandomVal, playerYRandomVal]
     return position
-
-
-
-def invertMap():
-    temp = pygame.surfarray.array2d(backGroundIMG)
-    blank = np.full((gameWindowWidth, gameWindowHeight), 255)
-    inverted = blank - temp
-    surface = pygame.surfarray.make_surface(inverted)
-    return surface
+def collisionChecker(firstGameObject, secondGameObject):
+    if firstGameObject.x + firstGameObject.width > secondGameObject.x and firstGameObject.x < secondGameObject.x + secondGameObject.width and firstGameObject.y + firstGameObject.height > secondGameObject.y and firstGameObject.y < secondGameObject.y + secondGameObject.height:
+        return True
 
 screen = pygame.display.set_mode((gameWindowWidth, gameWindowHeight))
 backGroundIMG = pygame.surfarray.make_surface(NMF.makeNoiseMap())
 upgradeObject = UpgradeClass(screen)
 
-def collisionChecker(firstGameObject, secondGameObject):
-        if firstGameObject.x + firstGameObject.width > secondGameObject.x and firstGameObject.x < secondGameObject.x + secondGameObject.width and firstGameObject.y + firstGameObject.height > secondGameObject.y and firstGameObject.y < secondGameObject.y + secondGameObject.height:
-            return True
-
-
 playerObject1 = PlayerClass(backGroundIMG,screen,position=findSpawnForPlayer(),PID=  1)
 playerObject2 = PlayerClass(backGroundIMG,screen,position=findSpawnForPlayer(),PID = 2)
 players.append(playerObject1)
 players.append(playerObject2)
-
-
-
 generateEnemy()
 
 done = False
