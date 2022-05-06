@@ -86,8 +86,8 @@ def generateEnemy():
 
 def findSpawnForPlayer():
     i = False
-    playerXRandomVal = random.randint(0, gameWindowWidth)
-    playerYRandomVal = random.randint(0, gameWindowHeight)
+    playerXRandomVal = random.randint(20, gameWindowWidth - 20)
+    playerYRandomVal = random.randint(20, gameWindowHeight - 20)
     while i == False:
         playerXRandomVal = random.randint(0,gameWindowWidth)
         playerYRandomVal = random.randint(0, gameWindowHeight)
@@ -138,20 +138,20 @@ while not done:
 
         #KEY PRESSES:
         if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
-      #      for playerObject in players:
             movementfunction(event)
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 backGroundIMG = invertMap()
-    for playerObject in players:
-        playerObject.update(backGroundIMG)
-        if playerObject.playerHP == 0:
-            players.remove(playerObject)
+
 
 
 
     #Update functions)
     if players != []:
+        for playerObject in players:
+            playerObject.update(backGroundIMG)
+            if playerObject.playerHP == 0:
+                players.remove(playerObject)
         if len(enemies) < upgradeObject.challengeLevel:
             generateEnemy()
 

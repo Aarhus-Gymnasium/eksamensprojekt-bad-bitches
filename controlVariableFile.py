@@ -11,7 +11,7 @@ player1VariableControl = {
     "color": (255,0,0)
 }
 player2VariableControl = {
-    "upVariable:": pygame.K_w,
+    "upVariable": pygame.K_w,
     "downVariable": pygame.K_s,
     "leftVariable": pygame.K_a,
     "rightVariable":  pygame.K_d,

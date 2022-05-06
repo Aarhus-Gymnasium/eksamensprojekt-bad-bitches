@@ -2,7 +2,7 @@
 
 import pygame
 from CircularBufferFile import CircularBuffer
-import controlVariableFile
+#import controlVariableFile
 
 
 
@@ -33,11 +33,27 @@ class PlayerClass:
 
         self.playerID = PID
         if self.playerID == 1:
-            self.playerMovement = controlVariableFile.playerVariableList[0]
+            self.playerMovement = {
+                "upVariable": pygame.K_UP,
+                "downVariable": pygame.K_DOWN,
+                "leftVariable": pygame.K_LEFT,
+                "rightVariable": pygame.K_RIGHT,
+                "shootVariable": pygame.K_m,
+                "teleportVariable": pygame.K_n,
+                "color": (255, 0, 0)
+            }
         if self.playerID == 2:
-            self.playerMovement = controlVariableFile.playerVariableList[1]
+            self.playerMovement = {
+                "upVariable": pygame.K_w,
+                "downVariable": pygame.K_s,
+                "leftVariable": pygame.K_a,
+                "rightVariable": pygame.K_d,
+                "shootVariable": pygame.K_y,
+                "teleportVariable": pygame.K_t,
+                "color": (0, 0, 255),
+            }
 
-        self.playerMovement = controlVariableFile.playerVariableList[self.playerID-1]
+        #self.playerMovement = controlVariableFile.playerVariableList[self.playerID-1]
 
         self.playerHP = 100
         self.CircularCordinateBuffer = CircularBuffer(180)  # Class for circular X cord lists for making items follow player
