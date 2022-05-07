@@ -3,11 +3,9 @@ import numpy as np
 import NoiseMapFile as NMF
 from Player import PlayerClass
 from Enemy import EnemyClass
-#from Shot import ShotClass
 from upgradeFile import UpgradeClass
 import pygame
 from Shot import ShotClass
-#from keyboardControlFunctionFile import movementfunction
 
 
 pygame.init()
@@ -144,6 +142,8 @@ while not done:
         for shot in shots:
             shot.update()
             if shot.x > gameWindowWidth or shot.x < 0 or shot.y > gameWindowHeight or shot.y < 0:
+                shots.remove(shot)
+            if shot.deleteTimer > 600:
                 shots.remove(shot)
 
 

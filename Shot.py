@@ -13,9 +13,11 @@ class ShotClass:
         self.xSpeed = playerSpeedX
         self.ySpeed = playerSpeedY
         self.theScreen = screen
+        self.deleteTimer = 0
 
 
     def update(self):
+        self.deleteTimer += 1
         self.x += self.xSpeed * 3
         self.y += self.ySpeed * 3
 

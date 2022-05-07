@@ -82,11 +82,11 @@ class UpgradeClass:
                 self.displayPower = 0
 
     def playerIsDead(self,playerObject, surface,font):
-        randomTextColor = (35, rando(100, 200), rando(200, 255))
+        randomTextColor = (rando(200,230), rando(50, 100), 0)
         text = font.render('Player ' + str(playerObject.playerID) + ' is dead!', True, randomTextColor)
         text_width, text_height = font.size('Player ' + str(playerObject.playerID) + 'is dead!')
         surface.blit(text, ((playerObject.screenWidth - text_width) / 2 - rando(-5, 5),
-                            (playerObject.screenHeight - text_height) / 2 - rando(-5, 5)))
+                            (playerObject.screenHeight - text_height) / 2  - 300- rando(-5, 5)))
         self.playerDeadTimerVariable += 1
         if self.playerDeadTimerVariable > 120:
             self.playerDeadTimerVariable = 0

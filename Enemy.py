@@ -1,5 +1,4 @@
 import pygame
-from random import randint as rando
 
 
 #Code inspired by https://github.com/Robotto/theGame/blob/master/Shot.py

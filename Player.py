@@ -1,8 +1,5 @@
-#import random
-
 import pygame
 from CircularBufferFile import CircularBuffer
-#import controlVariableFile
 
 
 
