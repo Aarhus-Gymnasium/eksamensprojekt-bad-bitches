@@ -1,7 +1,8 @@
 import pygame
 
 
-#Code inspired by https://github.com/Robotto/theGame/blob/master/Shot.py
+#Code inspired by https://github.com/Robotto/theGame/blob/master/enemy.py
+#This enemy class creates a enemy object that follows the designated player.
 class EnemyClass:
     xSpeed=0
     ySpeed=0
@@ -34,6 +35,7 @@ class EnemyClass:
     def enemyDeadTimer(self):
         self.enemyTime +=1
 
+    #Update function works a lot like player object, other than they just try to follow the designated player.
     def update(self,bg):
 
 
@@ -50,6 +52,7 @@ class EnemyClass:
         if self.y<0:
             self.y=0
 
+        #Checks the pixel colour, if its white, it moves towards the player
         self.pixelColour = bg.get_at((self.futureX, self.futureY))
 
         if self.pixelColour.r > 100:
@@ -70,5 +73,5 @@ class EnemyClass:
 
 
     def draw(self):
-        #pygame.draw.rect(self.theScreen,self.color, pygame.Rect(self.x,self.y, 20,20))
+        #draws the enemy.
         self.theScreen.blit(self.image, (self.x, self.y))
