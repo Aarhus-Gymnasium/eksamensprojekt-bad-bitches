@@ -19,9 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed0a8a87-a375-4181-b440-a5039615561e" name="Default Changelist" comment="Iteration 1.9: removed recurssion  from player spawn. Fixed update function in player and enemy so invert map works.">
+    <list default="true" id="ed0a8a87-a375-4181-b440-a5039615561e" name="Default Changelist" comment="iteration 2.2: player shots, enemy sprite">
+      <change afterPath="$PROJECT_DIR$/Images/Flowchart#1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Sketch#1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/UML#1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upgradeFile.py" beforeDir="false" afterPath="$PROJECT_DIR$/upgradeFile.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,42 +43,28 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="JupyterTrust" id="011a0f2b-f775-407e-b08a-2126d16567fa" />
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="27KL0UJaZPRiWnJUqGJkiGIHXh4" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
-  }
-}</component>
-  <component name="RunManager" selected="Python.main">
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="C:\Users\Anne\AppData\Local\Programs\Python\Python39\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="tst" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Images" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ProEksamen" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -87,7 +77,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tst.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -98,7 +88,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.tst" />
+        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -118,6 +108,20 @@
       <workItem from="1651215326269" duration="9013000" />
       <workItem from="1651245475017" duration="2050000" />
       <workItem from="1651435263640" duration="3959000" />
+      <workItem from="1651578927326" duration="3714000" />
+      <workItem from="1651588400225" duration="311000" />
+      <workItem from="1651588827449" duration="1219000" />
+      <workItem from="1651590288638" duration="3687000" />
+      <workItem from="1651595452660" duration="3024000" />
+      <workItem from="1651614110952" duration="194000" />
+      <workItem from="1651818729623" duration="1737000" />
+      <workItem from="1651824414700" duration="388000" />
+      <workItem from="1652003596934" duration="1462000" />
+      <workItem from="1652005162759" duration="89000" />
+      <workItem from="1652005288701" duration="3246000" />
+      <workItem from="1652087591591" duration="2027000" />
+      <workItem from="1652127855339" duration="22000" />
+      <workItem from="1652192824017" duration="335000" />
     </task>
     <task id="LOCAL-00001" summary="Iteration 0.0:">
       <created>1649069788917</created>
@@ -186,7 +190,8 @@
     <option name="LAST_COMMIT_MESSAGE" value="Iteration 1.9: removed recurssion  from player spawn. Fixed update function in player and enemy so invert map works." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/ProEksamen$main.coverage" NAME="main Coverage Results" MODIFIED="1651488296479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/eksamensprojekt_bad_bitches$main.coverage" NAME="main Coverage Results" MODIFIED="1652127857043" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ProEksamen$tst.coverage" NAME="tst Coverage Results" MODIFIED="1649070360779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ProEksamen$main.coverage" NAME="main Coverage Results" MODIFIED="1651645085384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

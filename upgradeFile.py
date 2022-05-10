@@ -53,7 +53,7 @@ class UpgradeClass:
 
 
     def update(self):
-        self.points += 40
+        self.points += 20
         if self.points > 100:
             self.points -= 100
             self.challengeLevel += 1
