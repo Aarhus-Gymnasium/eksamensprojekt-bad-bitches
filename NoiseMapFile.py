@@ -4,7 +4,7 @@ import numpy as np
 
 #This creates a 2d array of noise with perlin noise, and turns it into an image.
 def makeNoiseMap():
-    #Example: https://stackoverflow.com/questions/36719997/threshold-in-2d-numpy-array
+    #Example: https://stackoverflow.com/questions/60350598/perlin-noise-in-pythons-noise-library
     shape = (1024,1024)
     scale = .5
     octaves = 6
