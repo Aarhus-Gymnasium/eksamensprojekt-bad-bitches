@@ -2,8 +2,6 @@ import pygame
 from CircularBufferFile import CircularBuffer
 
 
-
-
 class PlayerClass:
 
     xSpeed=0
@@ -25,9 +23,8 @@ class PlayerClass:
         self.height = 20
         self.bg = BG
         self.maxSpeed=6
-       # self.playerMovement = {}
 
-
+        #takes the player ID, and assigns keyboard variables and color.
         self.playerID = PID
         if self.playerID == 1:
             self.playerMovement = {
@@ -50,11 +47,8 @@ class PlayerClass:
                 "color": (0, 0, 255),
             }
 
-        #self.playerMovement = controlVariableFile.playerVariableList[self.playerID-1]
-
         self.playerHP = 100
         self.CircularCordinateBuffer = CircularBuffer(180)  # Class for circular X cord lists for making items follow player
-
 
         self.theScreen=screen
         self.screenWidth = self.theScreen.get_size()[0] #
@@ -62,29 +56,29 @@ class PlayerClass:
 
 
     def update(self,bg):
+        #queues in the current x and y value
         self.CircularCordinateBuffer.enqueue((self.x, self.y))
         if self.CircularCordinateBuffer.is_full():
             self.CircularCordinateBuffer.dequeue()
-
+        #takes the speed and makes a future x and y value
         self.futureX=self.x+self.xSpeed
         self.futureY=self.y+self.ySpeed
 
-
-
-
+        # if the future x value is within the screen, and the pixel in futureX and y, if it is, x = futureX
         if self.futureX > 0 and self.futureX < self.screenWidth - self.width:
             self.pixelColour = bg.get_at((self.futureX, self.y))
 
             if self.pixelColour.r > 100:
                 self.x = self.futureX
 
+        # if the future y value is within the screen, and the pixel in futureY and x, if it is, y = futureY
         if self.futureY > 0 and self.futureY < self.screenHeight-self.height:
             self.pixelColour = bg.get_at((self.x, self.futureY))
 
             if self.pixelColour.r > 100:
                 self.y = self.futureY
 
-
+    #makes x and y equal to the last in circular queue
     def teleportBack(self):
         if self.canTeleportPower == True:
             self.x, self.y = self.CircularCordinateBuffer.frontOffSet(180)

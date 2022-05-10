@@ -1,5 +1,5 @@
 #This circular buffer is made by: https://gist.github.com/edwintcloud/f998e15d839e17ebcae2b8e2bb1d8d8c
-
+#It is used to track the cordinates of the player for every tick, over the last 3 seconds. and if they have the upgrade, they can teleport 3 seconds back.
 class CircularBuffer(object):
 
     def __init__(self, max_size=10):

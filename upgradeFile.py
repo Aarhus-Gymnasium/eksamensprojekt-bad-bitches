@@ -2,7 +2,7 @@ import pygame
 from random import randint as rando
 
 
-
+#This class controls upgrades, and the text that appears on screen.
 class UpgradeClass:
 
     backgroundColor = (50,50,50)
@@ -51,9 +51,9 @@ class UpgradeClass:
             self.powerText = 'Teleport Upgrade!'
 
 
-
+    #This update is run when an enemy is killed, and runs upgrade players if at 100 points.
     def update(self):
-        self.points += 20
+        self.points += 10
         if self.points > 100:
             self.points -= 100
             self.challengeLevel += 1
@@ -71,7 +71,7 @@ class UpgradeClass:
         pygame.draw.rect(self.theScreen, self.color,pygame.Rect(self.x+5, 5, self.points * 3 + 1, 40))
 
 
-
+        #This draws the nexest upgrade gotten for 2 seconds.
         if self.displayPower > 0:
             randomTextColor = ( 35, rando(100,200),  rando(200,255))
             text = font.render(self.powerText, True, randomTextColor)
@@ -81,6 +81,8 @@ class UpgradeClass:
             if self.displayPower > 120:
                 self.displayPower = 0
 
+    #If a player dies, it draws which player, and adds it to the screen.
+    #It checks how wide and high the text is, and makes sure it is in the middle no matter what.
     def playerIsDead(self,playerObject, surface,font):
         randomTextColor = (rando(200,230), rando(50, 100), 0)
         text = font.render('Player ' + str(playerObject.playerID) + ' is dead!', True, randomTextColor)

@@ -1,5 +1,6 @@
 import pygame
 
+#Code inspired by https://github.com/Robotto/theGame/blob/master/Shot.py
 class ShotClass:
 
     width = 10
