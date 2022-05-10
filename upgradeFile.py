@@ -53,7 +53,7 @@ class UpgradeClass:
 
     #This update is run when an enemy is killed, and runs upgrade players if at 100 points.
     def update(self):
-        self.points += 10
+        self.points += 20
         if self.points > 100:
             self.points -= 100
             self.challengeLevel += 1

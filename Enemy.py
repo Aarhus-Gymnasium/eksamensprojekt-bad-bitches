@@ -10,7 +10,6 @@ class EnemyClass:
 
     color=( 35, 53, 97)
     points=0
-    enemyTime = 0
     width = 20
     height = 20
 
@@ -29,11 +28,6 @@ class EnemyClass:
         self.x = X
         self.y = Y
 
-
-
-
-    def enemyDeadTimer(self):
-        self.enemyTime +=1
 
     #Update function works a lot like player object, other than they just try to follow the designated player.
     def update(self,bg):
@@ -69,9 +63,6 @@ class EnemyClass:
             self.x += self.xSpeed
             self.y += self.ySpeed
 
-
-
-
     def draw(self):
-        #draws the enemy.
+        # draws the enemy.
         self.theScreen.blit(self.image, (self.x, self.y))

@@ -68,7 +68,7 @@ def generateEnemy():
     while i == False:
         enemyXRandomVal = random.randint(1, gameWindowWidth - 1)
         enemyYRandomVal = random.randint(1, gameWindowHeight - 1)
-        if abs(enemyXRandomVal - playerObject1.x and playerObject2.x) > 100 and abs(enemyYRandomVal - playerObject1.y and playerObject2.y > 100):
+        if abs(enemyXRandomVal - playerObject1.x)  > 100 and abs(enemyXRandomVal - playerObject2.x)  > 100 and abs(enemyYRandomVal - playerObject1.y) > 100 and abs(enemyYRandomVal - playerObject2.y)  > 100:
             pixelColour = backGroundIMG.get_at((enemyXRandomVal, enemyYRandomVal))
             if pixelColour.r == 255:
                 i = True
@@ -157,6 +157,10 @@ while not done:
         for enemy in enemies:
             enemyDead = False
             enemy.update(backGroundIMG)
+            if collisionChecker(enemy, playerObject1):
+               playerObject1.playerHP -= 1
+            if collisionChecker(enemy, playerObject2):
+                playerObject2.playerHP -= 1
 
             #checks if every shot is touching the specefic enemy, deletes them if they are.
             for shot in shots:
@@ -166,17 +170,20 @@ while not done:
                     else:
                         enemyDead = True
 
+
                         shouldGetUpgrade = upgradeObject.update()
                         if shouldGetUpgrade == True:
                             randomUpgrade = random.randint(0,2)
                             for playerObject in players:
                                 upgradeObject.upgradePlayers(playerObject,randomUpgrade)
-
-
                         shots.remove(shot)
                         enemies.remove(enemy)
-            for playerObject in players:
-                playerObject1.playerHP -= 1
+
+
+
+
+
+
 
 
 
